@@ -1,8 +1,9 @@
-import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Entity, hasMany, model, property} from '@loopback/repository';
+import {Persona} from './persona.model';
 import {Vehiculo} from './vehiculo.model';
 
 @model()
-export class Mecanico extends Entity {
+export class Mecanico extends Entity implements Persona {
   @property({
     type: 'string',
     id: true,
@@ -24,6 +25,30 @@ export class Mecanico extends Entity {
 
   @hasMany(() => Vehiculo)
   vehiculos: Vehiculo[];
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  Nombre: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  Apellido: string;
+
+  @property({
+    type: 'date',
+    required: true,
+  })
+  FechaNacimiento: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  Telefono: string;
 
   constructor(data?: Partial<Mecanico>) {
     super(data);
