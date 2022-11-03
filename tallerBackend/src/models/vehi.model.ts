@@ -12,6 +12,8 @@ export class Vehi extends Entity {
       minLength: 6,
       errorMessage: 'La placa debe tener 6 caracteres',
       transform: ['toUpperCase'],
+      pattern: "([A-Z]{3}[0-9]{3})"
+
     },
   })
   Placa: string;
@@ -59,8 +61,7 @@ export class Vehi extends Entity {
     jsonSchema: {
       maxLength: 10,
       minLength: 5,
-      errorMessage: 'City name should be between 5 and 20 characters',
-      transform: ['toUpperCase'],
+      errorMessage: 'Las caracteristicas deben tener entre 5 y 10 caracteres',
     },
   })
   Caracteristicas: string;
