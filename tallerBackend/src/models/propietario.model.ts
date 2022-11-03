@@ -1,19 +1,44 @@
-import {Entity, model, property, hasMany} from '@loopback/repository';
-import {Vehiculo} from './vehiculo.model';
+import {Entity, model, property, hasOne} from '@loopback/repository';
+import {Vehi} from './vehi.model';
 
 @model()
 export class Propietario extends Entity {
   @property({
     type: 'string',
-    required: true,
+    id: true,
+    generated: true,
   })
-  id: string;
+  id?: string;
 
   @property({
     type: 'string',
     required: true,
   })
-  Ciudad: string;
+  Nombre: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  Apellidos: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  NumeroTelefono: string;
+
+  @property({
+    type: 'date',
+    default: 1950,
+  })
+  FechaNacimiento?: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  CiudadResidencia: string;
 
   @property({
     type: 'string',
@@ -21,8 +46,8 @@ export class Propietario extends Entity {
   })
   Correo: string;
 
-  @hasMany(() => Vehiculo)
-  vehiculos: Vehiculo[];
+  @hasOne(() => Vehi)
+  vehi: Vehi;
 
   constructor(data?: Partial<Propietario>) {
     super(data);

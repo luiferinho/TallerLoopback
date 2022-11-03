@@ -1,36 +1,22 @@
 import {inject, Getter} from '@loopback/core';
-import {
-  DefaultCrudRepository,
-  repository,
-  HasManyRepositoryFactory,
-} from '@loopback/repository';
+import {DefaultCrudRepository, repository, HasOneRepositoryFactory} from '@loopback/repository';
 import {MongodbDataSource} from '../datasources';
-import {Propietario, PropietarioRelations, Vehiculo} from '../models';
-import {VehiculoRepository} from './vehiculo.repository';
+import {Propietario, PropietarioRelations, Vehi} from '../models';
+import {VehiRepository} from './vehi.repository';
 
 export class PropietarioRepository extends DefaultCrudRepository<
   Propietario,
   typeof Propietario.prototype.id,
   PropietarioRelations
 > {
-  public readonly vehiculos: HasManyRepositoryFactory<
-    Vehiculo,
-    typeof Propietario.prototype.id
-  >;
+
+  public readonly vehi: HasOneRepositoryFactory<Vehi, typeof Propietario.prototype.id>;
 
   constructor(
-    @inject('datasources.mongodb') dataSource: MongodbDataSource,
-    @repository.getter('VehiculoRepository')
-    protected vehiculoRepositoryGetter: Getter<VehiculoRepository>,
+    @inject('datasources.mongodb') dataSource: MongodbDataSource, @repository.getter('VehiRepository') protected vehiRepositoryGetter: Getter<VehiRepository>,
   ) {
     super(Propietario, dataSource);
-    this.vehiculos = this.createHasManyRepositoryFactoryFor(
-      'vehiculos',
-      vehiculoRepositoryGetter,
-    );
-    this.registerInclusionResolver(
-      'vehiculos',
-      this.vehiculos.inclusionResolver,
-    );
+    this.vehi = this.createHasOneRepositoryFactoryFor('vehi', vehiRepositoryGetter);
+    this.registerInclusionResolver('vehi', this.vehi.inclusionResolver);
   }
 }
