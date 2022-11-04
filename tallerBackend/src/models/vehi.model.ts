@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {Entity, model, property} from '@loopback/repository';
-
 @model()
 export class Vehi extends Entity {
   @property({
@@ -59,7 +59,7 @@ export class Vehi extends Entity {
     type: 'string',
     required: true,
     jsonSchema: {
-      maxLength: 10,
+      maxLength: 15,
       minLength: 5,
       errorMessage: 'Las caracteristicas deben tener entre 5 y 10 caracteres',
     },
@@ -68,8 +68,10 @@ export class Vehi extends Entity {
 
   @property({
     type: 'string',
+    required: true,
+    unique: true,
   })
-  propietarioId?: string;
+  propietarioId: string;
 
   constructor(data?: Partial<Vehi>) {
     super(data);

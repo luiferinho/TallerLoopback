@@ -12,12 +12,17 @@ import {
   response
 } from '@loopback/rest';
 import {Vehi} from '../models';
+
 import {VehiRepository} from '../repositories';
+import {PropietarioRepository} from '../repositories/';
+
+/* import {Utils} from '../service/app.service'; */
 
 export class VehiController {
   constructor(
     @repository(VehiRepository)
-    public vehiRepository : VehiRepository,
+    public vehiRepository : VehiRepository, @repository(PropietarioRepository) public propietarioRepository : PropietarioRepository
+    /* private utils: Utils */
   ) {}
 
   @post('/vehis')
@@ -38,9 +43,19 @@ export class VehiController {
     })
     vehi: Vehi,
   ): Promise<Vehi> {
-    return this.vehiRepository.create(vehi);
-  }
+/*     const validateUniqueUser = this.utils.validationUserId(vehi.propietarioId)
+    if (validateUniqueUser != null) {
+       throw new Error("YA EXISTE ESE VEHICULO CON ESE USUARIO");
+    } else return this.vehiRepository.create(vehi); */
 
+ /*  const propietario =  this.vehiRepository.find({where:{propietarioId : {like : vehi.propietarioId}}});
+    if (propietario != null){
+      throw new Error("YA EXISTE ESE VEHICULO CON ESE USUARIO");
+    }else { */
+      return this.vehiRepository.create(vehi);
+  /*   } */
+
+  }
   @get('/vehis/count')
   @response(200, {
     description: 'Vehi model count',
@@ -132,6 +147,7 @@ export class VehiController {
     @param.path.string('id') id: string,
     @requestBody() vehi: Vehi,
   ): Promise<void> {
+    id = id.toUpperCase();
     await this.vehiRepository.replaceById(id, vehi);
   }
 
@@ -139,6 +155,7 @@ export class VehiController {
   @response(204, {
     description: 'Vehi DELETE success',
   })
+
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.vehiRepository.deleteById(id);
   }

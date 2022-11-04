@@ -37,7 +37,7 @@ export class Propietario extends Entity {
   Apellidos: string;
 
   @property({
-    type: 'string',
+    type: 'number',
     required: true,
     jsonSchema: {
       maxLength: 10,
@@ -47,7 +47,7 @@ export class Propietario extends Entity {
 
     },
   })
-  NumeroTelefono: string;
+  NumeroTelefono: number;
 
   @property({
     type: 'date',
