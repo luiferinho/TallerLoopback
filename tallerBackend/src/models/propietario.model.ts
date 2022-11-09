@@ -67,6 +67,12 @@ export class Propietario extends Entity {
 
   @property({
     type: 'string',
+    required: false,
+  })
+  clave: string;
+
+  @property({
+    type: 'string',
     required: true,
     jsonSchema: {
      format: 'email'

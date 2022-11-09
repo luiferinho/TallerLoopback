@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -17,13 +18,14 @@ import {VehiRepository} from '../repositories';
 import {PropietarioRepository} from '../repositories/';
 
 /* import {Utils} from '../service/app.service'; */
-
+@authenticate("admin")
 export class VehiController {
   constructor(
     @repository(VehiRepository)
-    public vehiRepository : VehiRepository, @repository(PropietarioRepository) public propietarioRepository : PropietarioRepository
+    public vehiRepository: VehiRepository, @repository(PropietarioRepository) public propietarioRepository: PropietarioRepository
     /* private utils: Utils */
-  ) {}
+  ) { }
+
 
   @post('/vehis')
   @response(200, {
@@ -43,19 +45,20 @@ export class VehiController {
     })
     vehi: Vehi,
   ): Promise<Vehi> {
-/*     const validateUniqueUser = this.utils.validationUserId(vehi.propietarioId)
-    if (validateUniqueUser != null) {
-       throw new Error("YA EXISTE ESE VEHICULO CON ESE USUARIO");
-    } else return this.vehiRepository.create(vehi); */
+    /*     const validateUniqueUser = this.utils.validationUserId(vehi.propietarioId)
+        if (validateUniqueUser != null) {
+           throw new Error("YA EXISTE ESE VEHICULO CON ESE USUARIO");
+        } else return this.vehiRepository.create(vehi); */
 
- /*  const propietario =  this.vehiRepository.find({where:{propietarioId : {like : vehi.propietarioId}}});
-    if (propietario != null){
-      throw new Error("YA EXISTE ESE VEHICULO CON ESE USUARIO");
-    }else { */
-      return this.vehiRepository.create(vehi);
-  /*   } */
+    /*  const propietario =  this.vehiRepository.find({where:{propietarioId : {like : vehi.propietarioId}}});
+       if (propietario != null){
+         throw new Error("YA EXISTE ESE VEHICULO CON ESE USUARIO");
+       }else { */
+    return this.vehiRepository.create(vehi);
+    /*   } */
 
   }
+  @authenticate.skip()
   @get('/vehis/count')
   @response(200, {
     description: 'Vehi model count',
